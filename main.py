@@ -4,7 +4,7 @@ import os
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(page_title="Mujeeb Ahmed", layout="wide")
 
-# ---------------- DETECT THEME ----------------
+# ---------------- THEME DETECTION ----------------
 current_theme = st.get_option("theme.base")  # "light" or "dark"
 
 if current_theme == "dark":
@@ -99,7 +99,6 @@ if page == "Home":
     st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("---")
 
-    # Cards Section
     st.markdown('<div class="section">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3, gap="large")
 
@@ -236,6 +235,7 @@ elif page == "Contact":
 
     st.markdown("### Send Me a Message")
 
+    # Contact Form
     with st.form("contact_form"):
         name = st.text_input("Your Name")
         email = st.text_input("Your Email")
@@ -250,20 +250,17 @@ elif page == "Contact":
                     import smtplib
                     from email.message import EmailMessage
 
-                    # Create email
                     msg = EmailMessage()
                     msg['Subject'] = f"Portfolio Contact Form Message from {name}"
                     msg['From'] = os.environ.get("EMAIL_USER")
                     msg['To'] = os.environ.get("EMAIL_USER")
                     msg.set_content(f"Name: {name}\nEmail: {email}\nMessage:\n{message}")
 
-                    # Send email
                     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
                         smtp.login(os.environ.get("EMAIL_USER"), os.environ.get("EMAIL_PASSWORD"))
                         smtp.send_message(msg)
 
                     st.success("✅ Your message has been sent! I will contact you soon.")
-
                 except Exception as e:
                     st.error(f"❌ Failed to send message. Error: {e}")
 
