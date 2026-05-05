@@ -26,7 +26,10 @@ html, body, [class*="css"] {
 }
 
 /* hide default Streamlit chrome */
-#MainMenu, footer, header { visibility: hidden; }
+#MainMenu,
+[data-testid="stMainMenu"],
+[data-testid="stToolbar"],
+footer, header { visibility: hidden; }
 
 .block-container {
     max-width: 1080px;
@@ -597,8 +600,14 @@ elif page == "Contact":
                 st.error("Please write a message.")
             else:
                 # ── send email ──
-                EMAIL_USER = os.environ.get("EMAIL_USER", "")
-                EMAIL_PASS = os.environ.get("EMAIL_PASSWORD", "")
+                # Reads from Streamlit Cloud Secrets (share.streamlit.io → Settings → Secrets)
+                # Falls back to local environment variables when running on your PC
+                try:
+                    EMAIL_USER = st.secrets["EMAIL_USER"]
+                    EMAIL_PASS = st.secrets["EMAIL_PASSWORD"]
+                except Exception:
+                    EMAIL_USER = os.environ.get("EMAIL_USER", "")
+                    EMAIL_PASS = os.environ.get("EMAIL_PASSWORD", "")
 
                 if not EMAIL_USER or not EMAIL_PASS:
                     st.warning(
