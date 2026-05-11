@@ -10,14 +10,14 @@ st.set_page_config(
 )
 
 # ─────────────────────────────
-# CSS
+# CSS (SAFE - NO SIDEBAR BREAK)
 # ─────────────────────────────
 st.markdown("""
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
 
-html, body, [class*="css"] {
+html, body, [class*="css"]{
     font-family: 'Outfit', sans-serif;
 }
 
@@ -25,29 +25,20 @@ html, body, [class*="css"] {
     visibility: hidden;
 }
 
+/* App background */
 .stApp {
     background: #0b1220;
     color: white;
 }
 
-/* Sidebar always visible */
-section[data-testid="stSidebar"] {
+/* Sidebar safe styling */
+[data-testid="stSidebar"] {
     background-color: #0f172a;
-    padding-top: 20px;
-}
-
-/* Cards */
-.card {
-    background: rgba(255,255,255,0.05);
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    border: 1px solid rgba(255,255,255,0.08);
 }
 
 /* Title */
-.title {
-    font-size: 42px;
+.big-title {
+    font-size: 40px;
     font-weight: 700;
 }
 
@@ -55,12 +46,27 @@ section[data-testid="stSidebar"] {
     color: #38bdf8;
 }
 
-/* Skills bar */
+.subtext {
+    color: #94a3b8;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+/* Card */
+.card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+/* Skill bar */
 .bar {
     width: 100%;
     height: 8px;
     background: rgba(255,255,255,0.1);
-    border-radius: 20px;
+    border-radius: 10px;
     overflow: hidden;
 }
 
@@ -84,20 +90,19 @@ section[data-testid="stSidebar"] {
 """, unsafe_allow_html=True)
 
 # ─────────────────────────────
-# SIDEBAR (REAL FIX)
+# SIDEBAR NAVIGATION
 # ─────────────────────────────
 with st.sidebar:
-
     st.title("👨‍💻 Mujeeb Ahmed")
     st.caption("Python Developer | Data Science | Educator")
 
-    page = st.selectbox(
+    page = st.radio(
         "Navigation",
         ["Home", "About Me", "Skills", "Projects", "Contact"]
     )
 
 # ─────────────────────────────
-# HOME
+# HOME PAGE
 # ─────────────────────────────
 if page == "Home":
 
@@ -107,22 +112,23 @@ if page == "Home":
         try:
             st.image("profile.jpeg", width=250)
         except:
-            st.warning("Upload profile.jpeg in folder")
+            st.warning("Please upload profile.jpeg in GitHub repo")
 
     with col2:
         st.markdown("""
-        <div class="title">
+        <div class="big-title">
         Hi, I'm <span class="highlight">Mujeeb Ahmed</span>
         </div>
         """, unsafe_allow_html=True)
 
         st.write("""
-        I am a Python Developer and Data Science student.
-        I build real-world applications using Flask, Streamlit, and AI tools.
+        Python Developer, Data Science student, and Educator.
+        I build real-world applications using Flask, Streamlit,
+        and modern AI tools.
         """)
 
 # ─────────────────────────────
-# ABOUT
+# ABOUT PAGE
 # ─────────────────────────────
 elif page == "About Me":
 
@@ -131,20 +137,22 @@ elif page == "About Me":
     st.markdown("""
     <div class="card">
     I am Mujeeb Ahmed from Pakistan.
-    I specialize in Python development, web apps, and teaching programming.
+    I am a Python Developer and Data Science student
+    at Sukkur IBA University.
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("""
     <div class="card">
-    🎓 Data Science Student (Sukkur IBA University)<br>
-    💻 Python Developer<br>
-    📍 Sukkur, Pakistan
+    💻 Python Developer  
+    🎓 Data Science Student  
+    📍 Sukkur, Pakistan  
+    👨‍🏫 Programming Instructor  
     </div>
     """, unsafe_allow_html=True)
 
 # ─────────────────────────────
-# SKILLS
+# SKILLS PAGE
 # ─────────────────────────────
 elif page == "Skills":
 
@@ -158,37 +166,53 @@ elif page == "Skills":
         "JavaScript": 70
     }
 
-    for skill, value in skills.items():
+    for skill, percent in skills.items():
+
         st.write(skill)
+
         st.markdown(f"""
         <div class="bar">
-            <div class="fill" style="width:{value}%"></div>
+            <div class="fill" style="width:{percent}%"></div>
         </div>
         """, unsafe_allow_html=True)
 
 # ─────────────────────────────
-# PROJECTS
+# PROJECTS PAGE
 # ─────────────────────────────
 elif page == "Projects":
 
     st.title("Projects")
 
     projects = [
-        ("Quiz System", "Flask-based quiz platform with admin panel"),
-        ("AI Chatbot", "AI chatbot using OpenAI API"),
-        ("Data Dashboard", "Interactive Streamlit dashboard")
+        {
+            "title": "Quiz System",
+            "desc": "Flask-based quiz system with admin panel and database."
+        },
+        {
+            "title": "AI Chatbot",
+            "desc": "AI chatbot using OpenAI API integration."
+        },
+        {
+            "title": "Data Dashboard",
+            "desc": "Interactive Streamlit dashboard for data analysis."
+        }
     ]
 
-    for title, desc in projects:
+    for p in projects:
         st.markdown(f"""
         <div class="card">
-            <h3>{title}</h3>
-            <p>{desc}</p>
+            <h3>{p['title']}</h3>
+            <p>{p['desc']}</p>
         </div>
         """, unsafe_allow_html=True)
 
+        st.markdown("""
+        <span class="tag">Python</span>
+        <span class="tag">Project</span>
+        """, unsafe_allow_html=True)
+
 # ─────────────────────────────
-# CONTACT
+# CONTACT PAGE
 # ─────────────────────────────
 elif page == "Contact":
 
@@ -196,13 +220,13 @@ elif page == "Contact":
 
     st.markdown("""
     <div class="card">
-    📧 Email: ahmedalixy149@gmail.com<br>
-    📱 Phone: +92 318 030 7822<br>
-    📍 Sukkur, Pakistan
+    📧 Email: ahmedalixy149@gmail.com  
+    📱 Phone: +92 318 030 7822  
+    📍 Location: Sukkur, Pakistan  
     </div>
     """, unsafe_allow_html=True)
 
     st.text_input("Your Name")
     st.text_input("Your Email")
     st.text_area("Message")
-    st.button("Send")
+    st.button("Send Message")
