@@ -10,35 +10,34 @@ st.set_page_config(
 )
 
 # ─────────────────────────────
-# CSS (Modern Clean UI)
+# GLOBAL CSS
 # ─────────────────────────────
 st.markdown("""
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
 
-html, body, [class*="css"] {
+html, body, [class*="css"]{
     font-family: 'Outfit', sans-serif;
 }
 
-#MainMenu, footer, header {
-    visibility: hidden;
+#MainMenu, footer, header{
+    visibility:hidden;
 }
 
-/* App Background */
-.stApp {
+.stApp{
     background: #0b1220;
     color: white;
 }
 
-/* Sidebar */
+/* Sidebar Styling */
 section[data-testid="stSidebar"] {
     background: #0f172a;
 }
 
-/* Titles */
+/* Title */
 .title {
-    font-size: 42px;
+    font-size: 40px;
     font-weight: 700;
 }
 
@@ -52,57 +51,60 @@ section[data-testid="stSidebar"] {
     line-height: 1.7;
 }
 
-/* Card */
-.card {
+/* Cards */
+.card{
     background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
     padding: 20px;
     border-radius: 15px;
-    border: 1px solid rgba(255,255,255,0.08);
     margin-bottom: 15px;
 }
 
 /* Skill bar */
-.bar {
+.bar{
+    width: 100%;
     height: 8px;
     background: rgba(255,255,255,0.1);
     border-radius: 10px;
     overflow: hidden;
 }
 
-.fill {
+.fill{
     height: 100%;
     background: #38bdf8;
 }
 
 /* Tag */
-.tag {
-    display: inline-block;
-    padding: 5px 10px;
-    margin: 3px;
+.tag{
+    display:inline-block;
     background: rgba(56,189,248,0.15);
-    color: #38bdf8;
-    border-radius: 20px;
-    font-size: 12px;
+    color:#38bdf8;
+    padding:6px 10px;
+    margin:3px;
+    border-radius:20px;
+    font-size:12px;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
 # ─────────────────────────────
-# SIDEBAR NAVIGATION
+# SIDEBAR (REAL NAVIGATION)
 # ─────────────────────────────
-st.sidebar.title("Mujeeb Ahmed")
-st.sidebar.caption("Python Developer | Data Scientist | Educator")
+with st.sidebar:
 
-page = st.sidebar.radio(
-    "Navigation",
-    ["Home", "About", "Skills", "Projects", "Contact"]
-)
+    st.title("👨‍💻 Mujeeb Ahmed")
+    st.caption("Python Developer | Data Science | Educator")
+
+    menu = st.radio(
+        "Navigation",
+        ["Home", "About Me", "Skills", "Projects", "Contact"]
+    )
 
 # ─────────────────────────────
-# HOME
+# HOME PAGE
 # ─────────────────────────────
-if page == "Home":
+if menu == "Home":
 
     col1, col2 = st.columns([1, 2])
 
@@ -110,9 +112,10 @@ if page == "Home":
         try:
             st.image("profile.jpeg", width=250)
         except:
-            st.warning("Upload profile.jpeg in project folder")
+            st.warning("Add profile.jpeg in project folder")
 
     with col2:
+
         st.markdown("""
         <div class="title">
         Hi, I'm <span class="highlight">Mujeeb Ahmed</span>
@@ -121,52 +124,54 @@ if page == "Home":
 
         st.markdown("""
         <div class="subtext">
-        I am a Python Developer and Data Science student
-        who builds modern web apps, automation tools,
-        and AI-based systems.
+        I am a Python Developer, Data Science student, and Educator.
+        I build modern applications using Python, Flask, Streamlit,
+        and AI tools.
         <br><br>
-        I also teach programming with a focus on real-world projects.
+        My goal is to create real-world projects and teach students
+        through practical coding experience.
         </div>
         """, unsafe_allow_html=True)
 
 # ─────────────────────────────
-# ABOUT
+# ABOUT PAGE
 # ─────────────────────────────
-elif page == "About":
+elif menu == "About Me":
 
-    st.markdown("## About Me")
+    st.title("About Me")
 
     st.markdown("""
     <div class="card">
-    I am passionate about programming, teaching, and building real-world applications.
-    My focus is on Python, Flask, Streamlit, and Data Science.
+    I am Mujeeb Ahmed from Pakistan, currently studying Data Science at Sukkur IBA University.
+    I specialize in Python development, web applications, and teaching programming.
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("""
     <div class="card">
-    🎓 Education: Data Science (Sukkur IBA University)<br>
-    💻 Role: Developer & Instructor<br>
-    📍 Location: Pakistan<br>
+    📍 Location: Sukkur, Sindh, Pakistan  
+    🎓 Education: Data Science (Sukkur IBA University)  
+    💼 Role: Developer & Programming Instructor  
     </div>
     """, unsafe_allow_html=True)
 
 # ─────────────────────────────
-# SKILLS
+# SKILLS PAGE
 # ─────────────────────────────
-elif page == "Skills":
+elif menu == "Skills":
 
-    st.markdown("## Skills")
+    st.title("Skills")
 
     skills = {
         "Python": 90,
         "Flask": 85,
         "Streamlit": 92,
-        "HTML/CSS": 80,
+        "HTML & CSS": 80,
         "JavaScript": 70
     }
 
     for skill, value in skills.items():
+
         st.write(skill)
 
         st.markdown(f"""
@@ -176,31 +181,32 @@ elif page == "Skills":
         """, unsafe_allow_html=True)
 
 # ─────────────────────────────
-# PROJECTS
+# PROJECTS PAGE
 # ─────────────────────────────
-elif page == "Projects":
+elif menu == "Projects":
 
-    st.markdown("## Projects")
+    st.title("Projects")
 
     projects = [
         {
             "title": "Quiz System",
-            "desc": "Flask-based quiz platform with admin panel and database system.",
+            "desc": "Flask-based quiz system with admin panel, database, and result tracking.",
             "tags": ["Flask", "SQLite", "Python"]
         },
         {
             "title": "AI Chatbot",
-            "desc": "AI-powered chatbot with OpenAI API integration.",
+            "desc": "AI chatbot with OpenAI API integration and smart responses.",
             "tags": ["AI", "Python", "API"]
         },
         {
             "title": "Data Dashboard",
-            "desc": "Interactive data visualization dashboard using Streamlit.",
+            "desc": "Interactive dashboard for data visualization using Streamlit.",
             "tags": ["Streamlit", "Pandas", "Plotly"]
         }
     ]
 
     for p in projects:
+
         st.markdown(f"""
         <div class="card">
             <h3>{p['title']}</h3>
@@ -212,17 +218,17 @@ elif page == "Projects":
             st.markdown(f"<span class='tag'>{t}</span>", unsafe_allow_html=True)
 
 # ─────────────────────────────
-# CONTACT
+# CONTACT PAGE
 # ─────────────────────────────
-elif page == "Contact":
+elif menu == "Contact":
 
-    st.markdown("## Contact Me")
+    st.title("Contact Me")
 
     st.markdown("""
     <div class="card">
-    📧 Email: ahmedalixy149@gmail.com<br>
-    📱 Phone: +92 318 030 7822<br>
-    📍 Location: Sukkur, Pakistan
+    📧 Email: ahmedalixy149@gmail.com  
+    📱 Phone: +92 318 030 7822  
+    📍 Location: Sukkur, Pakistan  
     </div>
     """, unsafe_allow_html=True)
 
