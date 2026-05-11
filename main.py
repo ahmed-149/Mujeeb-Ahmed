@@ -13,26 +13,22 @@ st.set_page_config(
 )
 
 # ─────────────────────────────────────────
-#  GLOBAL CSS
+#  GLOBAL CSS (Improved & Robust)
 # ─────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap');
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+*, *::before, *::after { box-sizing: border-box; }
 html, body, [class*="css"] { font-family: 'Lato', sans-serif; }
 
-/* ── FORCE DARK ── */
-.stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"] {
+.stApp {
     background-color: #0C0C14 !important;
     color: #DDDDE8 !important;
 }
 
-/* ── HIDE CHROME ── */
-#MainMenu, [data-testid="stMainMenu"], [data-testid="stToolbar"], [data-testid="stDecoration"], footer, header { 
-    visibility: hidden !important; height: 0 !important; 
-}
+/* Hide Streamlit Header/Footer */
+header, footer, [data-testid="stToolbar"] { visibility: hidden !important; height: 0 !important; }
 
 .block-container {
     max-width: 1060px;
@@ -41,15 +37,13 @@ html, body, [class*="css"] { font-family: 'Lato', sans-serif; }
 }
 
 /* ════════════════════════════════════════
-   SIDEBAR 
+   SIDEBAR & NAV
 ════════════════════════════════════════ */
 section[data-testid="stSidebar"] {
     background-color: #08080F !important;
     border-right: 1px solid rgba(255,255,255,0.06) !important;
-    min-width: 240px !important;
 }
 
-/* Sidebar Logo Area */
 .sb-brand {
     padding: 40px 24px 20px;
     border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -60,7 +54,6 @@ section[data-testid="stSidebar"] {
     font-size: 1.3rem !important;
     font-weight: 700 !important;
     color: #DDDDE8 !important;
-    line-height: 1.2;
 }
 .sb-role {
     font-family: 'JetBrains Mono', monospace !important;
@@ -71,75 +64,68 @@ section[data-testid="stSidebar"] {
     margin-top: 5px;
 }
 
-/* ── RADIO NAVIGATION FIX ── */
-/* Hide the default radio circle and label */
-[data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label > div:first-child {
-    display: none !important;
-}
-
-/* Style the text as a button */
+/* Radio Button Styling */
 [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label {
     background-color: transparent !important;
-    border: none !important;
-    padding: 12px 18px !important;
-    margin: 2px 10px !important;
+    padding: 10px 16px !important;
+    margin: 4px 12px !important;
     border-radius: 8px !important;
-    transition: all 0.25s ease !important;
-    cursor: pointer !important;
+    transition: 0.2s;
     width: 90% !important;
 }
 
-/* Hover State */
 [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label:hover {
     background-color: rgba(91,164,212,0.08) !important;
 }
 
-/* Active/Selected State */
 [data-testid="stSidebar"] .stRadio div[role="radiogroup"] [data-checked="true"] {
     background-color: rgba(91,164,212,0.15) !important;
     border-left: 3px solid #5BA4D4 !important;
-    border-radius: 0 8px 8px 0 !important;
 }
 
-/* Navigation Text Styling */
-[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label p {
+/* Hide Radio Circles */
+[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label div[data-testid="stMarkdownContainer"] p {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 0.72rem !important;
     letter-spacing: 2px !important;
     text-transform: uppercase !important;
-    color: #6A6A88 !important; /* Default unselected color */
+    color: #6A6A88 !important;
 }
 
 [data-testid="stSidebar"] .stRadio div[role="radiogroup"] [data-checked="true"] p {
-    color: #5BA4D4 !important; /* Selected text color */
-    font-weight: 600 !important;
+    color: #5BA4D4 !important;
 }
 
-.sb-foot {
-    position: fixed;
-    bottom: 20px;
-    left: 24px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.56rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: #3A3A55;
+[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label > div:first-child {
+    display: none !important;
 }
 
 /* ════════════════════════════════════════
-   PAGE CONTENT ELEMENTS
+   CONTENT CARDS & HEADINGS
 ════════════════════════════════════════ */
-.pg-h1 { font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800; color: #DDDDE8; margin-bottom: 10px; }
+.pg-h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; color: #DDDDE8; margin: 40px 0 10px; }
 .pg-h1 span { color: #5BA4D4; }
+
 .card {
     background: #13131E;
     border: 1px solid rgba(255,255,255,0.07);
     border-radius: 12px;
-    padding: 30px;
-    margin-bottom: 20px;
-    transition: 0.3s ease;
+    padding: 28px;
+    margin-bottom: 18px;
 }
-.card:hover { border-color: rgba(91,164,212,0.3); transform: translateY(-3px); }
+.card h3 { font-family: 'Syne', sans-serif; font-size: 1.3rem; color: #DDDDE8; margin-bottom: 10px; }
+.card p { color: #8888A4; line-height: 1.7; font-weight: 300; }
+
+.tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    padding: 4px 10px;
+    background: rgba(91,164,212,0.1);
+    color: #5BA4D4;
+    border: 1px solid rgba(91,164,212,0.3);
+    border-radius: 4px;
+    margin-right: 5px;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -154,93 +140,94 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-    # UPDATED NAVIGATION OPTIONS
     page = st.radio(
         "Nav",
         options=["Home", "About", "Skills", "Projects", "Contact"],
         label_visibility="collapsed"
     )
 
-    st.markdown("""
-    <div class="sb-foot">
-        SUKKUR, PAKISTAN<br>
-        © 2026
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown('<div style="margin-top:50px; padding:24px; font-family:monospace; font-size:10px; color:#3A3A55;">SUKKUR, PK<br>PYTHON • DATA • WEB</div>', unsafe_allow_html=True)
 
 # ─────────────────────────────────────────
-#  HOME PAGE
+#  PAGES
 # ─────────────────────────────────────────
+
 if page == "Home":
     col1, col2 = st.columns([1, 2], gap="large")
     with col1:
         st.markdown("<div style='height:80px'></div>", unsafe_allow_html=True)
-        try:
-            st.image("profile.jpeg", width=200)
-        except:
-            st.markdown("<div style='width:200px; height:200px; background:#13131E; border:1px solid #5BA4D4; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#5BA4D4; font-size:3rem; font-weight:800;'>MA</div>", unsafe_allow_html=True)
-    
+        st.image("profile.jpeg", width=200) if os.path.exists("profile.jpeg") else st.markdown("<div style='width:200px; height:200px; background:#13131E; border:1px solid #5BA4D4; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#5BA4D4; font-size:3rem; font-weight:800;'>MA</div>", unsafe_allow_html=True)
+
     with col2:
         st.markdown("<div style='height:80px'></div>", unsafe_allow_html=True)
-        st.markdown(f'<div class="pg-h1">Mujeeb<br><span>Ahmed</span></div>', unsafe_allow_html=True)
-        st.write("Computer Science professional & Educator specializing in high-performance application development and technical training.")
+        st.markdown('<div class="pg-h1">Mujeeb<br><span>Ahmed</span></div>', unsafe_allow_html=True)
+        st.markdown("""
+            <p style='color:#8888A4; font-size:1.1rem; max-width:500px;'>
+            I build real-world Python applications and train the next generation of developers 
+            through hands-on, project-based teaching. Based in Sukkur, Pakistan.
+            </p>
+        """, unsafe_allow_html=True)
 
-# ─────────────────────────────────────────
-#  ABOUT PAGE
-# ─────────────────────────────────────────
 elif page == "About":
     st.markdown('<div class="pg-h1">About <span>Me</span></div>', unsafe_allow_html=True)
-    st.markdown("""
-    <div class="card">
-        <h3>Background</h3>
-        <p>I am a Computer Science professional based in Sukkur, Pakistan. With a focus on technical instruction and development, 
-        I bridge the gap between complex logic and user-friendly interfaces.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    c1, c2 = st.columns([2, 1])
+    with c1:
+        st.markdown("""
+        <div class="card">
+            <h3>Developer. Educator. Builder.</h3>
+            <p>I am <strong>Mujeebullah S/O Nizamuddin</strong>, a Computer Science professional from Sukkur. 
+            I have spent the past years bridging the gap between academic theory and real-world software.</p>
+            <br>
+            <p>My approach is simple: write code that solves real problems, and teach concepts through things that actually work.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    with c2:
+        st.markdown("""
+        <div class="card">
+            <h3>Quick Facts</h3>
+            <p><strong>Location:</strong> Sukkur, PK</p>
+            <p><strong>Role:</strong> Instructor</p>
+            <p><strong>Focus:</strong> Data Science</p>
+        </div>
+        """, unsafe_allow_html=True)
 
-# ─────────────────────────────────────────
-#  SKILLS PAGE
-# ─────────────────────────────────────────
 elif page == "Skills":
-    st.markdown('<div class="pg-h1">Technical <span>Skills</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="pg-h1">Skills & <span>Tools</span></div>', unsafe_allow_html=True)
     st.markdown("""
     <div class="card">
-        <p><strong>Programming & Tools:</strong> Git, VS Code, Linux, SQL, HTML/CSS.</p>
+        <h3>Programming</h3>
+        <span class="tag">Python</span><span class="tag">C++</span><span class="tag">JavaScript</span><span class="tag">SQL</span>
+    </div>
+    <div class="card">
+        <h3>Frameworks & Libraries</h3>
+        <span class="tag">Streamlit</span><span class="tag">Flask</span><span class="tag">Pandas</span><span class="tag">Scikit-Learn</span>
     </div>
     """, unsafe_allow_html=True)
 
-# ─────────────────────────────────────────
-#  PROJECTS PAGE
-# ─────────────────────────────────────────
 elif page == "Projects":
     st.markdown('<div class="pg-h1">Selected <span>Projects</span></div>', unsafe_allow_html=True)
-    st.markdown("""
-    <div class="card">
-        <h3>Resume Screening System</h3>
-        <p>Developed an automated classification system for professional documents using modern NLP techniques.</p>
-    </div>
-    <div class="card">
-        <h3>Interactive Dashboards</h3>
-        <p>Built production-ready data visualization platforms for complex datasets.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    projects = [
+        ("Resume Screening System", "Utilized Python and Scikit-learn to automate classification of professional documents."),
+        ("AI Chatbot", "Conversational tool with speech-to-text integration and OpenAI API."),
+        ("Data Dashboards", "Interactive analytics dashboards built with Streamlit and Plotly.")
+    ]
+    for title, desc in projects:
+        st.markdown(f"""<div class="card"><h3>{title}</h3><p>{desc}</p></div>""", unsafe_allow_html=True)
 
-# ─────────────────────────────────────────
-#  CONTACT PAGE
-# ─────────────────────────────────────────
 elif page == "Contact":
-    st.markdown('<div class="pg-h1">Get In <span>Touch</span></div>', unsafe_allow_html=True)
-    col1, col2 = st.columns(2)
+    st.markdown('<div class="pg-h1">Contact <span>Me</span></div>', unsafe_allow_html=True)
+    col1, col2 = st.columns([1, 1.5])
     with col1:
         st.markdown("""
         <div class="card">
+            <h3>Reach Me</h3>
             <p><strong>Email:</strong> ahmedalixy149@gmail.com</p>
             <p><strong>Phone:</strong> +92 318 030 7822</p>
         </div>
         """, unsafe_allow_html=True)
     with col2:
-        name = st.text_input("Name")
-        email = st.text_input("Email")
+        name = st.text_input("Your Name")
+        email = st.text_input("Your Email")
         msg = st.text_area("Message")
         if st.button("Send Message"):
-            st.success("Message details captured! (Configure secrets to enable sending)")
+            st.success("Message details recorded!")
