@@ -6,7 +6,7 @@ from email.message import EmailMessage
 # ─────────────────────────────────────────
 #  PAGE CONFIG
 # ─────────────────────────────────────────
-st.set_page_config(page_title="Mujeeb Ahmed", page_icon="⚡", layout="wide")
+st.set_page_config(page_title="Mujeeb Ahmed", layout="wide")
 
 # ─────────────────────────────────────────
 #  GLOBAL CSS  –  fully theme-aware
@@ -286,7 +286,7 @@ with st.sidebar:
         </div>
     </div>
     """, unsafe_allow_html=True)
-    page = st.radio("", ["🏠  Home", "👤  About", "🛠  Skills", "📁  Projects", "🎓  Teaching", "📬  Contact"])
+    page = st.radio("", ["Home", "About", "Skills", "Projects", "Teaching", "Contact"])
     page = page.split("  ")[1]   # strip emoji prefix
 
 
@@ -304,7 +304,7 @@ if page == "Home":
             <div style='width:220px;height:220px;border-radius:20px;
                         background:linear-gradient(135deg,#22c55e,#4ade80);
                         display:flex;align-items:center;justify-content:center;
-                        font-size:5rem;'>👨‍💻</div>
+                        font-size:5rem;'></div>
             """, unsafe_allow_html=True)
 
     with col2:
